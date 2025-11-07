@@ -1,12 +1,4 @@
-import Ship from './ship.js'; 
-
-const shipTypes = [
-    { name: 'Carrier', length: 5 },
-    { name: 'Battleship', length: 4 },
-    { name: 'Cruiser', length: 3 },
-    { name: 'Submarine', length: 3 },
-    { name: 'Destroyer', length: 2 }
-];
+import Ship from './ship.js';
 
 class GameBoard {
     constructor() {
@@ -96,6 +88,10 @@ class GameBoard {
                 this.board[x + i][y] = ship; // increase row, same column (go down)
             }
         }
+    }
+
+    allShipsSunk() {
+        return this.ships.every(ship => ship.isSunk());
     }
 }
 
