@@ -1,11 +1,51 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <h1>Hello World!</h1>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="header">
+    <h1 class="title">BATTLESHIP</h1>
+  </div>
+  <div class="pregame-screen">
+    <div class="pregame-container">
+      <div class="pregame-header">
+        <h3>START NEW GAME!</h3>
+      </div>
+      <form id="pregame-form">
+        <div class="form-group">
+          <!-- organize ships -->
+          <fieldset>
+            <legend>organize ships *</legend>
+            <div class="toggle-group" role="group">
+              <input type="radio" id="random" name="organize" value="random" checked>
+              <label for="random">random</label>
+              <input type="radio" id="place-yourself" name="organize" value="place-yourself">
+              <label for="place-yourself">place yourself</label>
+            </div>
+          </fieldset>
+
+          <!-- select difficulty level -->
+          <fieldset>
+            <legend>select difficulty *</legend>
+            <div class="toggle-group" role="group">
+              <input type="radio" id="easy" name="difficulty" value="easy" checked>
+              <label for="easy">easy</label>
+              <input type="radio" id="hard" name="difficulty" value="hard">
+              <label for="hard">hard</label>
+            </div>
+          </fieldset>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn">START GAME</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+
 </html>

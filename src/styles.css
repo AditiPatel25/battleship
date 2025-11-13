@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -5,5 +7,127 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Press Start 2P", sans-serif;
+  background-color: cornflowerblue;
+}
+
+fieldset {
+  border: none;
+  padding: 0;
+  margin-bottom: 1.5rem;
+}
+
+legend {
+  font-size: 0.75rem;
+  color: #222;
+  margin-bottom: 0.75rem;
+  padding: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  margin: 25px;
+}
+
+.title {
+  border-radius: 15px;
+  border: 4px solid white;
+  padding: 15px;
+}
+
+/* .press-start-2p-regular {
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
+} */
+
+/* PREGAME-FORM */
+
+.pregame-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.pregame-container {
+  padding: 2rem;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+/* HEADER */
+
+.pregame-header h3 {
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+/* FORM ELEMENTS */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  text-align: left;
+}
+
+label {
+  font-size: 0.75rem;
+  color: #222;
+}
+
+/* TOGGLE GROUP */
+
+.toggle-group {
+  display: flex;
+  justify-content: start;
+  gap: 0.5rem;
+}
+
+.toggle-group input[type="radio"] {
+  display: none;
+}
+
+.toggle-group label {
+  padding: 0.5rem 1rem;
+  border: 2px solid #007bff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex: 1;
+  text-align: center
+}
+
+.toggle-group input[type="radio"]:checked+label {
+  background-color: #007bff;
+  color: white;
+}
+
+/* BUTTONS */
+
+.form-actions {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #007bff;
+  color: white;
+  font-family: inherit;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #0056b3;
 }
