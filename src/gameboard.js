@@ -1,8 +1,12 @@
 import Ship from './ship.js';
 
 class GameBoard {
+    static BOARD_SIZE = 10;
+    static SHIP_LENGTHS = [5, 4, 3, 3, 2];
+
     constructor() {
-        this.board = Array(10).fill(null).map(() => Array(10).fill(null));
+        this.board = Array(GameBoard.BOARD_SIZE).fill(null)
+            .map(() => Array(GameBoard.BOARD_SIZE).fill(null));
         this.ships = [];
         this.missedAttacks = [];
         this.hitAttacks = [];
@@ -28,15 +32,12 @@ class GameBoard {
     }
 
     placeAllShips() {
-        // Clear any existing ships first!
         this.ships = [];
-        this.board = Array(10).fill(null).map(() => Array(10).fill(null));
+        this.board = Array(GameBoard.BOARD_SIZE).fill(null)
+            .map(() => Array(GameBoard.BOARD_SIZE).fill(null));
 
-        const shipLengths = [5, 4, 3, 3, 2];
-
-        shipLengths.forEach(length => {
-            const ship = new Ship(length);
-            this.placeShip(ship); // random placement
+        GameBoard.SHIP_LENGTHS.forEach(length => {
+            this.placeShip(new Ship(length));
         });
     }
 

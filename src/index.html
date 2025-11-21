@@ -11,7 +11,7 @@
   <div class="header">
     <h1 class="title">BATTLESHIP</h1>
   </div>
-  <div class="pregame-screen">
+  <div class="pregame-screen" id="pregameScreen">
     <div class="pregame-container">
       <div class="pregame-header">
         <h3>START NEW GAME!</h3>
@@ -44,6 +44,29 @@
           <button type="submit" class="btn">START GAME</button>
         </div>
       </form>
+    </div>
+  </div>
+  <!-- GAME SCREEN -->
+  <div class="game-screen" id="gameScreen">
+    <div class="boards-container">
+      <!-- Player Board -->
+      <div class="board-section">
+        <div class="board-title">YOUR BOARD</div>
+        <div class="board" id="playerBoard"></div>
+      </div>
+
+      <!-- Computer Board -->
+      <div class="board-section">
+        <div class="board-title">OPPONENT BOARD</div>
+        <div class="board" id="computerBoard"></div>
+      </div>
+    </div>
+  </div>
+  <!-- Add this inside your body, after your game screens -->
+  <div id="gameOverModal" class="modal">
+    <div class="modal-content">
+      <h2 id="winnerText"></h2>
+      <button class="btn" id="playAgainBtn">play again</button>
     </div>
   </div>
 </body>
