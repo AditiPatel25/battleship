@@ -14,7 +14,7 @@ body {
 fieldset {
   border: none;
   padding: 0;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 legend {
@@ -37,12 +37,6 @@ legend {
   padding: 15px;
 }
 
-/* .press-start-2p-regular {
-  font-family: "Press Start 2P", system-ui;
-  font-weight: 400;
-  font-style: normal;
-} */
-
 /* PREGAME-FORM */
 
 .pregame-screen {
@@ -58,8 +52,8 @@ legend {
   background: white;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   text-align: center;
-  max-width: 500px; 
-  width: 100%; 
+  max-width: 500px;
+  width: 100%;
 }
 
 /* HEADER */
@@ -75,7 +69,6 @@ legend {
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
   text-align: left;
 }
 
@@ -114,7 +107,6 @@ label {
 /* BUTTONS */
 
 .form-actions {
-  margin-top: 0.5rem;
   display: flex;
   justify-content: center;
 }
@@ -129,6 +121,12 @@ label {
   font-size: 0.7rem;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  display: block;
+  margin: 10px auto;
+}
+
+.new-game-btn {
+  font-size: 1rem;
 }
 
 .btn:hover {
@@ -206,59 +204,106 @@ label {
 /* SHIP GUAGE */
 
 .ship-gauge {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 .ship-circle {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    background: #87ceeb;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #000;
-    font-weight: bold;
-    border: 2px solid #000;
-    transition: all 0.3s ease;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: #87ceeb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  font-weight: bold;
+  border: 2px solid #000;
+  transition: all 0.3s ease;
 }
 
 .ship-circle.sunk {
-    background: #ff4444; 
-    color: white;
-    border-color: #880000;
+  background: #ff4444;
+  color: white;
+  border-color: #880000;
 }
 
 .modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    align-items: center;
-    justify-content: center;
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  align-items: center;
+  justify-content: center;
 }
 
 .modal.active {
-    display: flex;
+  display: flex;
 }
 
 .modal-content {
-    background-color: #fff;
-    padding: 40px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    min-width: 300px;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  min-width: 300px;
 }
 
 .modal-content h2 {
-    margin: 0 0 20px 0;
-    font-size: 2em;
+  margin: 0 0 20px 0;
+  font-size: 2em;
 }
 
+/* PLACE SHIPS SCREEN */
+
+.placement-screen {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.placement-container {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.placement-container h2 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.placement-container p {
+  font-size: 0.7rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+#rotateShipBtn {
+  margin-bottom: 1rem;
+}
+
+.cell.preview-valid {
+  background-color: #90EE90 !important;
+  cursor: pointer;
+}
+
+.cell.preview-invalid {
+  background-color: #FFB6C6 !important;
+  cursor: not-allowed;
+}
+
+#placementBoard {
+  width: fit-content;
+  margin: 20px auto;
+}

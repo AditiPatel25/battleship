@@ -1,4 +1,5 @@
 import Player from './player.js';
+import Ship from './ship.js'
 import './styles.css';
 
 class GameUI {
@@ -13,33 +14,179 @@ class GameUI {
     this.gameOverModal = document.getElementById('gameOverModal');
     this.winnerText = document.getElementById('winnerText');
     this.playAgainBtn = document.getElementById('playAgainBtn');
+    this.placementScreen = document.getElementById('placementScreen');
+    this.placementBoard = document.getElementById('placementBoard');
+    this.currentShipIndex = 0;
+    this.shipsToPlace = [
+      { length: 5, name: 'carrier' },
+      { length: 4, name: 'battleship' },
+      { length: 3, name: 'cruiser' },
+      { length: 3, name: 'submarine' },
+      { length: 2, name: 'destroyer' }
+    ];
+    this.currentDirection = 'horizontal';
   }
 
   init() {
     this.pregameForm.addEventListener('submit', (e) => this.handleGameStart(e));
     this.playAgainBtn.addEventListener('click', () => this.resetGame());
+
+    const rotateBtn = document.getElementById('rotateShipBtn');
+    if (rotateBtn) {
+      rotateBtn.addEventListener('click', () => this.toggleDirection());
+    }
   }
 
   handleGameStart(e) {
     e.preventDefault();
 
     const organize = document.querySelector('input[name="organize"]:checked').value;
-    const difficulty = document.querySelector('input[name="difficulty"]:checked').value;
 
     // creates players
     this.humanPlayer = new Player('human');
     this.computerPlayer = new Player('computer');
 
-    // sets up ships
-    this.humanPlayer.gameboard.placeAllShips();
     this.computerPlayer.gameboard.placeAllShips();
 
-    // hides pregame screen, show game
+    if (organize === 'place-yourself') {
+      this.showPlacementScreen();
+    } else {
+      this.humanPlayer.gameboard.placeAllShips();
+      this.startGame();
+    }
+  }
+
+  showPlacementScreen() {
     this.pregameScreen.style.display = 'none';
-    this.gameScreen.style.display = 'flex'; 
+    this.placementScreen.style.display = 'flex';
+
+    this.currentShipIndex = 0;
+    this.currentDirection = 'horizontal';
+
+    this.renderPlacementBoard();
+    this.updatePlacementUI();
+  }
+
+  renderPlacementBoard() {
+    this.placementBoard.innerHTML = '';
+
+    for (let x = 0; x < 10; x++) {
+      for (let y = 0; y < 10; y++) {
+        const cell = document.createElement('div');
+        cell.className = 'cell';
+        cell.dataset.x = x;
+        cell.dataset.y = y;
+
+        // shows already placed ships
+        const shipAtCell = this.humanPlayer.gameboard.board[x][y];
+        if (shipAtCell) {
+          cell.classList.add('ship');
+        }
+
+        cell.addEventListener('mouseenter', (e) => this.handlePlacementHover(e));
+        cell.addEventListener('mouseleave', () => this.clearPlacementPreview());
+        cell.addEventListener('click', (e) => this.handlePlacementClick(e));
+
+        this.placementBoard.appendChild(cell);
+      }
+    }
+  }
+
+  handlePlacementHover(e) {
+    if (this.currentShipIndex >= this.shipsToPlace.length) return;
+
+    const x = parseInt(e.target.dataset.x);
+    const y = parseInt(e.target.dataset.y);
+    const ship = this.shipsToPlace[this.currentShipIndex];
+
+    this.clearPlacementPreview();
+
+    // shows preview of ship placement
+    const cells = this.getShipCells(x, y, ship.length);
+    const isValid = this.humanPlayer.gameboard.isValidPlacement(
+      { length: ship.length }, x, y, this.currentDirection
+    );
+
+    cells.forEach(([cx, cy]) => {
+      const cell = this.placementBoard.querySelector(`[data-x="${cx}"][data-y="${cy}"]`);
+      if (cell) {
+        cell.classList.add(isValid ? 'preview-valid' : 'preview-invalid');
+      }
+    });
+  }
+
+  clearPlacementPreview() {
+    const previewCells = this.placementBoard.querySelectorAll('.preview-valid, .preview-invalid');
+    previewCells.forEach(cell => {
+      cell.classList.remove('preview-valid', 'preview-invalid');
+    });
+  }
+
+  handlePlacementClick(e) {
+    if (this.currentShipIndex >= this.shipsToPlace.length) return;
+
+    const x = parseInt(e.target.dataset.x);
+    const y = parseInt(e.target.dataset.y);
+    const shipConfig = this.shipsToPlace[this.currentShipIndex];
+
+    const ship = new Ship(shipConfig.length);
+
+    if (this.humanPlayer.gameboard.isValidPlacement(ship, x, y, this.currentDirection)) {
+      this.humanPlayer.gameboard.addShipToBoard(ship, x, y, this.currentDirection);
+      this.humanPlayer.gameboard.ships.push(ship);
+
+      this.currentShipIndex++;
+
+      if (this.currentShipIndex >= this.shipsToPlace.length) {
+        setTimeout(() => this.startGame(), 500);
+      } else {
+        this.renderPlacementBoard();
+        this.updatePlacementUI();
+      }
+    }
+  }
+
+  getShipCells(x, y, length) {
+    const cells = [];
+    for (let i = 0; i < length; i++) {
+      if (this.currentDirection === 'horizontal') {
+        cells.push([x, y + i]);
+      } else {
+        cells.push([x + i, y]);
+      }
+    }
+    return cells;
+  }
+
+  toggleDirection() {
+    this.currentDirection = this.currentDirection === 'horizontal' ? 'vertical' : 'horizontal';
+    this.updatePlacementUI();
+    this.clearPlacementPreview();
+  }
+
+  updatePlacementUI() {
+    const instruction = document.getElementById('placementInstruction');
+    const rotateBtn = document.getElementById('rotateShipBtn');
+
+    if (this.currentShipIndex < this.shipsToPlace.length) {
+      const ship = this.shipsToPlace[this.currentShipIndex];
+      instruction.textContent = `place your ${ship.name} (${ship.length} cells) - direction: ${this.currentDirection}`;
+      rotateBtn.style.display = 'block';
+    } else {
+      instruction.textContent = 'All ships placed! Starting game...';
+      rotateBtn.style.display = 'none';
+    }
+  }
+
+  startGame() {
+    // hides placement ships screen
+    if (this.placementScreen) {
+      this.placementScreen.style.display = 'none';
+    }
+    this.pregameScreen.style.display = 'none';
+    this.gameScreen.style.display = 'flex';
     this.gameScreen.classList.add('active');
 
-    // renders boards
     this.renderBoards();
   }
 
@@ -159,18 +306,29 @@ class GameUI {
     // hides modal
     this.gameOverModal.classList.remove('active');
 
-    // hide game screen completely, show pregame screen
+    // hides all screens
     this.gameScreen.classList.remove('active');
-    this.gameScreen.style.display = 'none'; 
+    this.gameScreen.style.display = 'none';
+    if (this.placementScreen) {
+      this.placementScreen.style.display = 'none';
+    }
+
+    // shows pregame screen
     this.pregameScreen.style.display = 'flex';
 
-    // clears players
+    document.getElementById('random').checked = true;
+
     this.humanPlayer = null;
     this.computerPlayer = null;
 
-    // clears boards
     this.playerBoard.innerHTML = '';
     this.computerBoard.innerHTML = '';
+    if (this.placementBoard) {
+      this.placementBoard.innerHTML = '';
+    }
+
+    this.currentShipIndex = 0;
+    this.currentDirection = 'horizontal';
   }
 
 }
@@ -180,5 +338,5 @@ export default GameUI;
 document.addEventListener('DOMContentLoaded', () => {
   const gameUI = new GameUI();
   gameUI.init();
-  window.gameUI = gameUI; 
+  window.gameUI = gameUI;
 });

@@ -18,7 +18,7 @@
       </div>
       <form id="pregame-form">
         <div class="form-group">
-          <!-- organize ships -->
+          <!-- PREGAME-SCREEN -->
           <fieldset>
             <legend>organize ships *</legend>
             <div class="toggle-group" role="group">
@@ -29,23 +29,24 @@
             </div>
           </fieldset>
 
-          <!-- select difficulty level -->
-          <fieldset>
-            <legend>select difficulty *</legend>
-            <div class="toggle-group" role="group">
-              <input type="radio" id="easy" name="difficulty" value="easy" checked>
-              <label for="easy">easy</label>
-              <input type="radio" id="hard" name="difficulty" value="hard">
-              <label for="hard">hard</label>
-            </div>
-          </fieldset>
         </div>
         <div class="form-actions">
-          <button type="submit" class="btn">START GAME</button>
+          <button type="submit" class="btn new-game-btn">START GAME</button>
         </div>
       </form>
     </div>
   </div>
+
+  <!-- PLACE SHIPS SCREEN -->
+  <div class="placement-screen" id="placementScreen" style="display: none;">
+    <div class="placement-container">
+      <h2>PLACE YOUR SHIPS</h2>
+      <p id="placementInstruction">place your carrier (5 cells) - direction: horizontal</p>
+      <button class="btn" id="rotateShipBtn">rotate ship</button>
+      <div class="board" id="placementBoard"></div>
+    </div>
+  </div>
+
   <!-- GAME SCREEN -->
   <div class="game-screen" id="gameScreen">
     <div class="boards-container">
@@ -55,20 +56,20 @@
         <div class="board" id="playerBoard"></div>
       </div>
 
-      <!-- Computer Board -->
+      <!-- BOARD -->
       <div class="board-section">
         <div class="board-title">OPPONENT BOARD</div>
         <div class="board" id="computerBoard"></div>
       </div>
+
     </div>
   </div>
-  <!-- Add this inside your body, after your game screens -->
+  <!-- GAME OVER SCREEN -->
   <div id="gameOverModal" class="modal">
     <div class="modal-content">
       <h2 id="winnerText"></h2>
-      <button class="btn" id="playAgainBtn">play again</button>
+      <button class="btn new-game-btn" id="playAgainBtn">play again</button>
     </div>
   </div>
 </body>
-
 </html>

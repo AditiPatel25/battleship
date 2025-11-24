@@ -10,20 +10,18 @@ class GameBoard {
         this.ships = [];
         this.missedAttacks = [];
         this.hitAttacks = [];
-        this.size = 10;
     }
 
     placeShip(ship) {
         let placed = false;
         while (!placed) {
-            // Random number between 0 and 9 (for 10x10 board)
-            const x = Math.floor(Math.random() * this.size);
-            const y = Math.floor(Math.random() * this.size);
+            const x = Math.floor(Math.random() * GameBoard.BOARD_SIZE);
+            const y = Math.floor(Math.random() * GameBoard.BOARD_SIZE);
             const direction = Math.random() < 0.5 ? 'horizontal' : 'vertical';
 
-            // Check if ship fits and is valid
+            // checks if ship fits and is valid
             if (this.isValidPlacement(ship, x, y, direction)) {
-                // Place the ship on the board
+                // places the ship on the board
                 this.addShipToBoard(ship, x, y, direction);
                 this.ships.push(ship);
                 placed = true;
@@ -54,15 +52,15 @@ class GameBoard {
     }
 
     isValidPlacement(ship, x, y, direction) {
-        // Check if ship goes off board
-        if (direction === 'horizontal' && y + ship.length > this.size) {
+        // check if ship goes off board
+        if (direction === 'horizontal' && y + ship.length > GameBoard.BOARD_SIZE) {
             return false;
         }
-        if (direction === 'vertical' && x + ship.length > this.size) {
+        if (direction === 'vertical' && x + ship.length > GameBoard.BOARD_SIZE) {
             return false;
         }
 
-        // Check if all cells are empty
+        // check if all cells are empty
         if (direction === 'horizontal') {
             for (let i = 0; i < ship.length; i++) {
                 if (this.board[x][y + i] !== null) { // same row, increase column
