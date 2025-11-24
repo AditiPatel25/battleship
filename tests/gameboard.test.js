@@ -1,4 +1,3 @@
-// gameboard.test.js
 import Gameboard from '../src/gameboard.js';
 import Ship from '../src/ship.js';
 
@@ -46,7 +45,7 @@ describe('Gameboard', () => {
     const board = new Gameboard();
     const ship = new Ship(3);
     
-    // Manually place ship horizontally at (0,0)
+    // manually places ship horizontally at (0,0)
     board.ships.push(ship);
     board.board[0][0] = ship;
     board.board[0][1] = ship;

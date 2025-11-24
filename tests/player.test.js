@@ -1,4 +1,3 @@
-// player.test.js
 import Player from '../src/player.js';
 import Gameboard from '../src/gameboard.js';
 import Ship from '../src/ship.js';
@@ -28,10 +27,10 @@ describe('Player', () => {
     const player1 = new Player('human');
     const player2 = new Player('computer');
     
-    // Place a ship on player2's board
+    // places a ship on player2's board
     player2.gameboard.placeAllShips();
     
-    // Find where a ship is located
+    // find where a ship is located
     let x, y;
     for (let i = 0; i < 10; i++) {
       for (let j = 0; j < 10; j++) {
@@ -55,7 +54,7 @@ describe('Player', () => {
     
     player2.gameboard.placeAllShips();
     
-    // Find an empty spot
+    // find an empty spot
     let x, y;
     for (let i = 0; i < 10; i++) {
       for (let j = 0; j < 10; j++) {
@@ -120,12 +119,12 @@ describe('Player', () => {
     const computer = new Player('computer');
     const opponent = new Player('human');
     
-    // Make 10 attacks
+    // make 10 attacks
     for (let i = 0; i < 10; i++) {
       computer.makeRandomAttack(opponent.gameboard);
     }
     
-    // All attacks should be unique
+    // all attacks should be unique
     expect(computer.attackedPositions.size).toBe(10);
   });
 

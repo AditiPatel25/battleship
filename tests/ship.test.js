@@ -1,4 +1,3 @@
-// ship.test.js
 import Ship from '../src/ship.js';
 
 describe('Ship', () => {
